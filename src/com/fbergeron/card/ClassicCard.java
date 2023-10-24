@@ -140,7 +140,7 @@ public class ClassicCard extends Card {
 
             // Desenhar uma borda branca ao redor do verso da carta
             g.setColor(Color.white);
-            int borderWidth = 10; // Largura da borda branca
+            int borderWidth = 05; // Largura da borda branca
             g.fillRect(location.x, location.y, getSize().width, borderWidth); // Borda superior
             g.fillRect(location.x, location.y, borderWidth, getSize().height); // Borda esquerda
             g.fillRect(location.x, location.y + getSize().height - borderWidth, getSize().width, borderWidth); // Borda inferior
