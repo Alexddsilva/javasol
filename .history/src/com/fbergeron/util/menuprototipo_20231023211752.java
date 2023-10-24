@@ -24,7 +24,7 @@ public class menuprototipo extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); 
 
         JButton novoJogoButton = new JButton("Novo Jogo");
-        JButton melhoresTemposButton = new JButton("Ranking");
+        JButton melhoresTemposButton = new JButton("Melhores Tempos");
 
         novoJogoButton.setAlignmentX(Component.CENTER_ALIGNMENT); 
         melhoresTemposButton.setAlignmentX(Component.CENTER_ALIGNMENT); 

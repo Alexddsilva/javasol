@@ -7,6 +7,10 @@ import java.nio.file.Paths;
 import javax.swing.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+
 
 public class SolitaireRanking extends JFrame {
     private JTextArea textArea;
@@ -51,16 +55,27 @@ public class SolitaireRanking extends JFrame {
 
     private void loadJSONData() {
         try {
-            String jsonFilePath = "C:\\Users\\ktmig\\Desktop\\MS28S\\resultado.json"; 
+        	String jsonFilePath = new File("ranking.json").getAbsolutePath();
+        	
             String jsonData = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
-
-            Gson gson = new Gson();
-            Resultado resultado = gson.fromJson(jsonData, Resultado.class);
-
+            
+            java.util.List<Resultado> resultados;    
+            java.lang.reflect.Type listType = new TypeToken<java.util.List<Resultado>>() {}.getType();
+             
+            resultados = new Gson().fromJson(jsonData, listType);
+            
             StringBuilder sb = new StringBuilder();
-            sb.append("Tempo: ").append(resultado.getTempo()).append(System.lineSeparator());
-            sb.append("Movimentos: ").append(resultado.getMovimentos()).append(System.lineSeparator());
-
+            
+            sb.append("Ranking").append(System.lineSeparator()).append(System.lineSeparator());
+            
+            for(Integer i = 0; i < resultados.size(); i++) {
+            	Resultado resultado = resultados.get(i);
+            	
+            	sb.append("Tempo: ").append(resultado.getTempo()).append(System.lineSeparator());
+                sb.append("Movimentos: ").append(resultado.getMovimentos()).append(System.lineSeparator());
+                sb.append(System.lineSeparator());
+            }
+            
             textArea.setText(sb.toString());
         } catch (IOException e) {
             e.printStackTrace();
