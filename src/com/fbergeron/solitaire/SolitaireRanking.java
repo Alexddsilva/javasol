@@ -11,41 +11,38 @@ import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
-
 public class SolitaireRanking extends JFrame {
     private JTextArea textArea;
 
     public SolitaireRanking() {
         setTitle("Solitaire Ranking");
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE); // Define o comportamento de fechamento apenas para a janela atual
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE); 
         setSize(500, 400);
         setLocationRelativeTo(null);
         setResizable(false);
-        getContentPane().setBackground(new Color(7, 103, 45));
+        getContentPane().setBackground(new Color(60, 60, 60));  
 
-        JPanel panel = new JPanel(new GridBagLayout());
+        JPanel panel = new JPanel(new BorderLayout());
         panel.setOpaque(false);
 
         textArea = new JTextArea();
         textArea.setEditable(false);
-        textArea.setFont(new Font("Arial", Font.PLAIN, 14));
+        textArea.setFont(new Font("Arial", Font.BOLD, 16));  
         textArea.setForeground(Color.WHITE);
         textArea.setOpaque(false);
+        textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JScrollPane scrollPane = new JScrollPane(textArea);
+        JPanel textPanel = new JPanel();
+        panel.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
+        textPanel.setOpaque(false);
+        textPanel.add(textArea);
+
+        JScrollPane scrollPane = new JScrollPane(textPanel);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         scrollPane.setBorder(null);
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.anchor = GridBagConstraints.CENTER;
-
-        panel.add(scrollPane, gbc);
+        panel.add(scrollPane, BorderLayout.CENTER);
         add(panel);
 
         loadJSONData();
@@ -103,8 +100,6 @@ public class SolitaireRanking extends JFrame {
             this.movimentos = movimentos;
         }
     }
-
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new SolitaireRanking());
