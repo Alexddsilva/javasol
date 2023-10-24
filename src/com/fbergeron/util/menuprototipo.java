@@ -11,75 +11,77 @@ import java.util.Locale;
 
 public class menuprototipo extends JFrame {
 	
-	public static final Color BACK_COLOR  = new Color(7, 103, 45);
-	
     public menuprototipo() {
         setTitle("Menu Inicial");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(500, 400); 
+        setSize(600, 450); 
         setLocationRelativeTo(null);
 
+        // Cores
+        Color backgroundColor = new Color(60, 60, 60); // Um cinza escuro
+        Color buttonColor = new Color(30, 144, 255);   // Azul
+        Color hoverButtonColor = new Color(70, 180, 255); // Azul claro
+
         JPanel panel = new JPanel();
-        panel.setBackground(BACK_COLOR); 
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); 
+        panel.setLayout(new BorderLayout());
+        panel.setBackground(backgroundColor);
 
-        JButton novoJogoButton = new JButton("Novo Jogo");
-        JButton melhoresTemposButton = new JButton("Melhores Tempos");
+        // Panel central para os botões
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.setBackground(backgroundColor);
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(150, 150, 150, 150));
 
-        novoJogoButton.setAlignmentX(Component.CENTER_ALIGNMENT); 
-        melhoresTemposButton.setAlignmentX(Component.CENTER_ALIGNMENT); 
+        JButton novoJogoButton = createButton("Novo Jogo", buttonColor, hoverButtonColor);
+        JButton melhoresTemposButton = createButton("Melhores Tempos", buttonColor, hoverButtonColor);
 
         novoJogoButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Solitaire sol = new Solitaire( true );
-                sol.setLocale( Locale.ENGLISH );
-                sol.setVisible( true );
+                Solitaire sol = new Solitaire(true);
+                sol.setLocale(Locale.ENGLISH);
+                sol.setVisible(true);
                 dispose();
             }
         });
 
         melhoresTemposButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	SolitaireRanking rank = new SolitaireRanking();
-            	rank.setLocale( Locale.ENGLISH );
-            	rank.setVisible( true );
+                SolitaireRanking rank = new SolitaireRanking();
+                rank.setLocale(Locale.ENGLISH);
+                rank.setVisible(true);
             }
         });
 
-        Font buttonFont = new Font("Arial", Font.BOLD, 16);
-        Color buttonBackgroundColor = Color.WHITE;
-        Color buttonForegroundColor = Color.BLACK;
-        Color buttonBorderColor = Color.BLUE;
+        centerPanel.add(novoJogoButton);
+        centerPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        centerPanel.add(melhoresTemposButton);
 
-        novoJogoButton.setFont(buttonFont);
-        novoJogoButton.setBackground(buttonBackgroundColor);
-        novoJogoButton.setForeground(buttonForegroundColor);
-        novoJogoButton.setFocusPainted(false);
-        novoJogoButton.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(buttonBorderColor, 2),
-                BorderFactory.createEmptyBorder(10, 20, 10, 20)
-        ));
+        panel.add(centerPanel, BorderLayout.CENTER);
 
-        melhoresTemposButton.setFont(buttonFont);
-        melhoresTemposButton.setBackground(buttonBackgroundColor);
-        melhoresTemposButton.setForeground(buttonForegroundColor);
-        melhoresTemposButton.setFocusPainted(false);
-        melhoresTemposButton.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(buttonBorderColor, 2),
-                BorderFactory.createEmptyBorder(10, 20, 10, 20)
-        ));
-
-        panel.add(Box.createVerticalGlue()); 
-
-        panel.add(novoJogoButton);
-        panel.add(Box.createVerticalStrut(10)); 
-        panel.add(melhoresTemposButton);
-
-        panel.add(Box.createVerticalGlue()); 
-
-        add(panel);
+        getContentPane().add(panel);
 
         setVisible(true);
+    }
+
+    private JButton createButton(String text, Color bgColor, Color hoverColor) {
+        JButton button = new JButton(text);
+        button.setBackground(bgColor);
+        button.setForeground(Color.WHITE);
+        button.setFont(new Font("Arial", Font.BOLD, 16));
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setMaximumSize(new Dimension(300, 50));
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(hoverColor);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(bgColor);
+            }
+        });
+        return button;
     }
 
     public static void main(String[] args) {
