@@ -11,6 +11,6 @@
 	<classpathentry kind="lib" path="www/jar/img.jar"/>
 	<classpathentry kind="lib" path="www/jar/png.jar"/>
 	<classpathentry kind="lib" path="www/jar/properties.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ktmig/Downloads/gson-2.10.1.jar"/>
+	<classpathentry kind="lib" path="www/jar/gson-2.10.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
