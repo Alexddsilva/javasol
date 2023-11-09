@@ -267,7 +267,7 @@ public class Stack {
                     loc.x, loc.y, Card.DEFAULT_WIDTH - 1, Card.DEFAULT_HEIGHT - 1, 20, 20);
 
             g.setClip(border); // Don't draw outside the lines
-            g.setColor( new Color(0, 87, 38) );
+            g.setColor( new Color(224, 224, 224) );
             g.fillRect( loc.x, loc.y, Card.DEFAULT_WIDTH, Card.DEFAULT_HEIGHT );
             //g.setColor( Color.black );
             //g.drawRect( loc.x, loc.y, Card.DEFAULT_WIDTH, Card.DEFAULT_HEIGHT );

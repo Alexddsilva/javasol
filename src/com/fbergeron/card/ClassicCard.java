@@ -37,7 +37,7 @@ public class ClassicCard extends Card {
     public static final String  STRING_HIDDEN  = "X";
     
     public static final int     BORDER_ARC = 20;
-    public static final Color   CARD_COLOR = new Color (0,0,128);
+    public static final Color   CARD_COLOR = new Color (0,0,50);
 
     /**
      * Creates a card.

@@ -21,19 +21,12 @@ package com.fbergeron.solitaire;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
-import java.applet.*;
-import java.io.*;
-import java.net.*;
 import java.text.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Locale;
 import java.util.Random;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
-import javax.swing.KeyStroke;
 
 import com.fbergeron.card.*;
 import com.fbergeron.util.*;
@@ -46,8 +39,6 @@ import com.fbergeron.util.*;
 
 public class Solitaire extends Frame
 {
-
-	
     /** Number of sequential stacks. */
     public static final int SEQ_STACK_CNT = 4;
 
@@ -61,8 +52,7 @@ public class Solitaire extends Frame
     public static final Point REVEALED_CARDS_POS    = new Point( DECK_POS.x + ClassicCard.DEFAULT_WIDTH + 5, 5 );
     public static final Point SEQ_STACK_POS         = new Point( REVEALED_CARDS_POS.x + ClassicCard.DEFAULT_WIDTH + 92, DECK_POS.y );
     public static final Point SOL_STACK_POS         = new Point( DECK_POS.x, SEQ_STACK_POS.y + ClassicCard.DEFAULT_HEIGHT + 5 );
-
-    public static final Color TABLE_COLOR           = new Color(7, 103, 45);
+    public static final Color TABLE_COLOR           = new Color(60, 60, 60);
     
     public static long timestart = System.currentTimeMillis();
     public static int counter = 0;
@@ -207,8 +197,6 @@ public class Solitaire extends Frame
         
         menuDesenvolvimento.add( menuRanking );
         menuDesenvolvimento.add( menuPrototipo );
-        //String backgroundImageName = "test";
-        //backgroundImage = Util.getImageResourceFile(backgroundImageName + ".png", Solitaire.class );
 
         Button dica = new Button("Hint");
         dica.setBounds(160, 500, 50, 50);
@@ -224,7 +212,6 @@ public class Solitaire extends Frame
         desfazer.setFocusable(false);
         desfazer.setEnabled(false);
         //add(desfazer);
-        
         
         //Table
         table = new Table();
@@ -516,8 +503,6 @@ public class Solitaire extends Frame
         }
     }
     
-    
-    
     class RestartListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             gameStates.get( 0 ).restoreGameState( gameInfo, deck, revealedCards, solStack, seqStack, null );
@@ -571,12 +556,9 @@ public class Solitaire extends Frame
         public void actionPerformed(ActionEvent e) {
             if( frameMenuP == null )
             	frameMenuP = new menuprototipo();
-           // frameMenuP.setLocale( Solitaire.this.getLocale() );
-         //   frameMenuP.setVisible( true );
         }
     }
     
-
     class MouseManager extends MouseAdapter implements MouseMotionListener {
     	public void mouseMoved(MouseEvent e) {
         }
@@ -667,8 +649,6 @@ public class Solitaire extends Frame
     class Table extends Canvas
     {
     	
-    	
-    	
         public void update( Graphics g ) {
             paint( g );
         }
@@ -682,21 +662,12 @@ public class Solitaire extends Frame
             }
 
             //Enable antialiasing
-            //offscreenGr.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
             offscreenGr.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
 
-            //Draw background image
-            //offscreenGr.drawImage( backgroundImage, 0, 0, dim.width, dim.height, this );
-            
-            
             //Draw background
             offscreenGr.setColor( TABLE_COLOR );
             offscreenGr.fillRect( 0, 0, dim.width, dim.height );
             
-            
-
-            
-
             //Draw deck
             if( deck != null )
                 if( deck.isEmpty() ) {
@@ -708,8 +679,6 @@ public class Solitaire extends Frame
                     
                     offscreenGr.setColor( new Color (60,179,113) );
                     offscreenGr.fillRect( loc.x, loc.y, ClassicCard.DEFAULT_WIDTH, ClassicCard.DEFAULT_HEIGHT );
-                    //offscreenGr.setColor( Color.black );
-                    //offscreenGr.drawRect( loc.x, loc.y, ClassicCard.DEFAULT_WIDTH, ClassicCard.DEFAULT_HEIGHT );
                 }
                 else {
                     boolean xx = menuItemHint.getState();
@@ -771,15 +740,11 @@ public class Solitaire extends Frame
                 int y = 485;
                 
                 offscreenGr.setColor( Color.lightGray ); // Shadow
-                //offscreenGr.drawString( gameInfoStr, x + 1, y + 1 );
                 offscreenGr.setColor( Color.black ); // Text
-                //offscreenGr.drawString( gameInfoStr, x, y );
                 
                 //movimentos
                 offscreenGr.setColor( Color.lightGray ); // Shadow
-                //offscreenGr.drawString("Moves: " + counter, x + 1, y + 1 - 20 );
                 offscreenGr.setColor( Color.black ); // Text
-               // offscreenGr.drawString("Moves: " + counter, x, y - 20 );
                 
                 //tempo atualizado
                 long agr = (System.currentTimeMillis() - timestart)/1000;
@@ -806,15 +771,11 @@ public class Solitaire extends Frame
 
                 offscreenGr.setColor(Color.black); // Texto
                 //offscreenGr.drawString(agora, 9, getHeight() - 11); // Sombra
-
                 
                 if(!isGameWon()) {
                 	table.repaint(6);
                 }
-               
-                
-                
-                
+        
             }
             
             g.drawImage( offscreen, 0, 0, this );
@@ -860,423 +821,13 @@ public class Solitaire extends Frame
     // a 4 clubs could be put onto a sequential stack but instead the player draws cards until
     // a 3 hearts is revealed which can then go under the 4 clubs.
     private void setupWinnable() {
-        easyGames = new int[] {
-                6   ,
-                17  ,
-                18  ,
-                37  ,
-                52  ,
-                79  ,
-                142 ,
-                202 ,
-                225 ,
-                300 ,
-                442 ,
-                450 ,
-                462 ,
-                494 ,
-                558 ,
-                629 ,
-                634 ,
-                642 ,
-                657 ,
-                664 ,
-                685 ,
-                766 ,
-                781 ,
-                822 ,
-                860 ,
-                870 ,
-                873 ,
-                888 ,
-                913 ,
-                920 ,
-                930 ,
-                987 ,
-                1027    ,
-                1056    ,
-                1063    ,
-                1099    ,
-                1148    ,
-                1164    ,
-                1228    ,
-                1229    ,
-                1251    ,
-                1254    ,
-                1255    ,
-                1334    ,
-                1353    ,
-                1360    ,
-                1378    ,
-                1390    ,
-                1464    ,
-                1502    ,
-                1563    ,
-                1587    ,
-                1627    ,
-                1639    ,
-                1649    ,
-                1735    ,
-                1742    ,
-                1755    ,
-                1780    ,
-                1855    ,
-                1891    ,
-                1920    ,
-                1960    ,
-                1989    ,
-                1993    ,
-                2004    ,
-                2040    ,
-                2090    ,
-                2094    ,
-                2119    ,
-                2180    ,
-                2250    ,
-                2253    ,
-                2272    ,
-                2284    ,
-                2358    ,
-                2364    ,
-                2385    ,
-                2403    ,
-                2409    ,
-                2414    ,
-                2420    ,
-                2463    ,
-                2481    ,
-                2500    ,
-                2511    ,
-                2513    ,
-                2530    ,
-                2533    ,
-                2678    ,
-                2686    ,
-                2689    ,
-                2753    ,
-                2759    ,
-                2789    ,
-                2809    ,
-                2885    ,
-                2914    ,
-                2985    ,
-                2997    
+        easyGames = GameLevels.easyGame;
 
-        };
-
-        normalGames = new int[] {
-                0   ,
-                39  ,
-                47  ,
-                99  ,
-                186 ,
-                195 ,
-                207 ,
-                211 ,
-                259 ,
-                319 ,
-                382 ,
-                437 ,
-                536 ,
-                568 ,
-                662 ,
-                692 ,
-                734 ,
-                737 ,
-                738 ,
-                759 ,
-                773 ,
-                836 ,
-                839 ,
-                866 ,
-                899 ,
-                906 ,
-                1005    ,
-                1014    ,
-                1043    ,
-                1116    ,
-                1196    ,
-                1223    ,
-                1306    ,
-                1321    ,
-                1331    ,
-                1338    ,
-                1409    ,
-                1412    ,
-                1431    ,
-                1453    ,
-                1467    ,
-                1483    ,
-                1486    ,
-                1528    ,
-                1559    ,
-                1601    ,
-                1643    ,
-                1648    ,
-                1670    ,
-                1703    ,
-                1712    ,
-                1713    ,
-                1716    ,
-                1752    ,
-                1785    ,
-                1885    ,
-                1900    ,
-                1935    ,
-                1936    ,
-                1941    ,
-                2018    ,
-                2033    ,
-                2074    ,
-                2075    ,
-                2087    ,
-                2104    ,
-                2112    ,
-                2149    ,
-                2167    ,
-                2174    ,
-                2182    ,
-                2212    ,
-                2227    ,
-                2234    ,
-                2260    ,
-                2287    ,
-                2295    ,
-                2305    ,
-                2311    ,
-                2313    ,
-                2341    ,
-                2354    ,
-                2395    ,
-                2451    ,
-                2482    ,
-                2504    ,
-                2553    ,
-                2603    ,
-                2622    ,
-                2623    ,
-                2625    ,
-                2656    ,
-                2657    ,
-                2675    ,
-                2710    ,
-                2765    ,
-                2812    ,
-                2858    ,
-                2927    ,
-                2946    ,
-                2974    
-
-        };
-
-        hardGames = new int[] {
-                23  ,
-                58  ,
-                86  ,
-                106 ,
-                126 ,
-                134 ,
-                140 ,
-                169 ,
-                236 ,
-                260 ,
-                290 ,
-                320 ,
-                452 ,
-                458 ,
-                501 ,
-                502 ,
-                534 ,
-                561 ,
-                636 ,
-                676 ,
-                696 ,
-                729 ,
-                762 ,
-                806 ,
-                815 ,
-                861 ,
-                862 ,
-                869 ,
-                880 ,
-                932 ,
-                958 ,
-                1037    ,
-                1093    ,
-                1098    ,
-                1129    ,
-                1135    ,
-                1142    ,
-                1155    ,
-                1200    ,
-                1224    ,
-                1236    ,
-                1344    ,
-                1364    ,
-                1396    ,
-                1405    ,
-                1455    ,
-                1476    ,
-                1489    ,
-                1497    ,
-                1541    ,
-                1589    ,
-                1614    ,
-                1650    ,
-                1665    ,
-                1676    ,
-                1696    ,
-                1710    ,
-                1719    ,
-                1744    ,
-                1779    ,
-                1838    ,
-                1850    ,
-                1868    ,
-                1906    ,
-                1930    ,
-                1967    ,
-                1994    ,
-                1998    ,
-                2047    ,
-                2057    ,
-                2076    ,
-                2077    ,
-                2144    ,
-                2146    ,
-                2150    ,
-                2193    ,
-                2220    ,
-                2256    ,
-                2322    ,
-                2331    ,
-                2398    ,
-                2399    ,
-                2413    ,
-                2416    ,
-                2422    ,
-                2434    ,
-                2435    ,
-                2488    ,
-                2490    ,
-                2506    ,
-                2520    ,
-                2569    ,
-                2709    ,
-                2743    ,
-                2820    ,
-                2861    ,
-                2886    ,
-                2893    ,
-                2961    ,
-                2983    
-
-        };
-        trickyGames = new int[] {
-                1   ,
-                7   ,
-                14  ,
-                40  ,
-                50  ,
-                65  ,
-                67  ,
-                123 ,
-                157 ,
-                184 ,
-                185 ,
-                194 ,
-                328 ,
-                372 ,
-                408 ,
-                447 ,
-                484 ,
-                498 ,
-                509 ,
-                548 ,
-                559 ,
-                571 ,
-                581 ,
-                613 ,
-                660 ,
-                661 ,
-                680 ,
-                782 ,
-                852 ,
-                855 ,
-                903 ,
-                910 ,
-                915 ,
-                961 ,
-                965 ,
-                1090    ,
-                1108    ,
-                1131    ,
-                1153    ,
-                1179    ,
-                1188    ,
-                1193    ,
-                1212    ,
-                1214    ,
-                1217    ,
-                1318    ,
-                1325    ,
-                1333    ,
-                1388    ,
-                1403    ,
-                1425    ,
-                1437    ,
-                1473    ,
-                1475    ,
-                1487    ,
-                1507    ,
-                1516    ,
-                1619    ,
-                1624    ,
-                1631    ,
-                1640    ,
-                1654    ,
-                1673    ,
-                1679    ,
-                1688    ,
-                1761    ,
-                1783    ,
-                1853    ,
-                1875    ,
-                1948    ,
-                2011    ,
-                2032    ,
-                2041    ,
-                2043    ,
-                2053    ,
-                2108    ,
-                2139    ,
-                2277    ,
-                2301    ,
-                2400    ,
-                2417    ,
-                2428    ,
-                2474    ,
-                2478    ,
-                2627    ,
-                2646    ,
-                2684    ,
-                2724    ,
-                2760    ,
-                2770    ,
-                2790    ,
-                2848    ,
-                2859    ,
-                2868    ,
-                2884    ,
-                2909    ,
-                2925    ,
-                2934    ,
-                2941    ,
-                2962    
-
-                
-        };
-
+        normalGames = GameLevels.normalGames;
+        
+        hardGames = GameLevels.hardGames;
+        
+        trickyGames = GameLevels.trickyGames;
     }  
            
     protected   Image               backgroundImage;
