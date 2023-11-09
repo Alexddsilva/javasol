@@ -820,14 +820,15 @@ public class Solitaire extends Frame
     // if at some stage the player does not play a legal move but instead draws cards. For example 
     // a 4 clubs could be put onto a sequential stack but instead the player draws cards until
     // a 3 hearts is revealed which can then go under the 4 clubs.
+    
     private void setupWinnable() {
-        easyGames = GameLevels.easyGame;
+        easyGames = GameLevel.easyGame;
 
-        normalGames = GameLevels.normalGames;
+        normalGames = GameLevel.normalGames;
         
-        hardGames = GameLevels.hardGames;
+        hardGames = GameLevel.hardGames;
         
-        trickyGames = GameLevels.trickyGames;
+        trickyGames = GameLevel.trickyGames;
     }  
            
     protected   Image               backgroundImage;

@@ -1,6 +1,6 @@
 package com.fbergeron.util;
 
-public class GameLevels {
+public class GameLevel {
     public static int[] easyGame = {
         6, 17, 18, 37, 52, 79, 142, 202, 225, 300, 442, 450, 462, 494, 558, 629, 634, 642, 657, 664,
         685, 766, 781, 822, 860, 870, 873, 888, 913, 920, 930, 987, 1027, 1056, 1063, 1099, 1148, 1164, 1228, 1229,
