@@ -21,6 +21,9 @@ package com.fbergeron.solitaire;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -33,6 +36,7 @@ import com.fbergeron.solitaire.Solitaire.RestartListener;
 import com.fbergeron.util.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 
 public class FrameCongratulations extends Frame
@@ -80,7 +84,7 @@ public class FrameCongratulations extends Frame
         add(c);
         add(BorderLayout.CENTER, labelCongratulations);
         
-        String agora = " " + "Tempo: ";
+        String agora = " " + "Tempo (mm:ss): ";
          
         
         long minutos = calculaTempo(t1, t2);
@@ -89,7 +93,7 @@ public class FrameCongratulations extends Frame
         segundos = segundos % 60;
 
         
-        if (minutos<60) {
+        if (minutos<10) {
         	if(segundos<10) {
         		agora += "0" + minutos + ":0" + segundos;
         	}else {
@@ -103,24 +107,32 @@ public class FrameCongratulations extends Frame
         	}
         }
         
-        agora+="!" + " ";
-        String movimentos = "Moves: " + counter + "!";
-        
-        ResultadoJogo resultado = new ResultadoJogo(agora, counter);
-        
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(resultado);
-        
-        labelCongratulations.setText(Solitaire.resBundle.getString( "YouWon" ) + agora + movimentos);
-        
         try {
-            String jsonFilePath = "C:\\Users\\ktmig\\Desktop\\MS28S\\resultado.json";
-            Files.write(Paths.get(jsonFilePath), json.getBytes());
+        	String jsonRankingFilePath = new File("ranking.json").getAbsolutePath();
+            
+            java.util.List<Resultado> resultadosRanking = this.lerArrayResultadosJson(jsonRankingFilePath);
+            
+            Resultado resultado = new Resultado();
+            
+            String time = minutos < 10 ? "0" + minutos : "" + minutos;
+            time += ":";
+            time += segundos < 10 ? "0" + segundos : "" + segundos;
+            
+            resultado.setMovimentos(counter);
+            resultado.setTempo(time);
+            
+            resultadosRanking.add(resultado);
+
+            this.escreverArrayResultadosJson(jsonRankingFilePath, resultadosRanking);
         } catch (IOException e) {
-            e.printStackTrace();
+        	e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Erro ao gravar o arquivo JSON.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
         
+        agora+="!" + " ";
+        String movimentos = "Movimentos: " + counter + "!";
+        
+        labelCongratulations.setText(Solitaire.resBundle.getString( "Você ganhou" ) + agora + movimentos);
 
         setTitle( (String)Solitaire.resBundle.getString( "Congratulations" ) );
         addWindowListener( new WindowManager( this, WindowManager.HIDE_ON_CLOSE ) );
@@ -149,6 +161,26 @@ public class FrameCongratulations extends Frame
     	return resultado;
     }
 
+    private static java.util.List<Resultado> lerArrayResultadosJson(final String caminhoArquivo) throws IOException {
+        Gson gson = new Gson();
+        FileReader fileReader = new FileReader(caminhoArquivo);
+
+        java.lang.reflect.Type tipoColecao = new TypeToken<java.util.List<Resultado>>(){}.getType();
+        
+        java.util.List<Resultado> listaDeObjetos = gson.fromJson(fileReader, tipoColecao);
+        fileReader.close();
+
+        return listaDeObjetos != null ? listaDeObjetos : new ArrayList<>();
+    }
+
+    private static void escreverArrayResultadosJson(String caminhoArquivo, java.util.List<Resultado> listaDeObjetos) throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        FileWriter fileWriter = new FileWriter(caminhoArquivo);
+
+        gson.toJson(listaDeObjetos, fileWriter);
+        fileWriter.close();
+    }
+    
     public void addNotify()
     {
         // Record the size of the window prior to calling parents addNotify.
