@@ -769,8 +769,16 @@ public class Solitaire extends Frame
                 offscreenGr.setColor(Color.lightGray); // Sombra
                 offscreenGr.drawString(agora, 10, getHeight() - 10); // Texto
 
-                offscreenGr.setColor(Color.black); // Texto
-                //offscreenGr.drawString(agora, 9, getHeight() - 11); // Sombra
+                offscreenGr.setColor(Color.WHITE); 
+
+                if(levelStr != null) {
+                    offscreenGr.drawString(levelStr, 10, getHeight() - 50);
+                }
+
+                if(isRandomStr != null) {
+                    offscreenGr.drawString(isRandomStr, 10, getHeight() - 60);
+                }
+                
                 
                 if(!isGameWon()) {
                 	table.repaint(6);
