@@ -776,7 +776,7 @@ public class Solitaire extends Frame
                 }
 
                 if(isRandomStr != null) {
-                    offscreenGr.drawString(isRandomStr, 10, getHeight() - 60);
+                    offscreenGr.drawString(isRandomStr, 10, getHeight() - 50);
                 }
                 
                 
